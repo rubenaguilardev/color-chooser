@@ -8,19 +8,34 @@ import { useState } from "react";
 import { Alert, Text, View } from "react-native";
 
 export default function Index() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("ben@gmail.com");
+  const [password, setPassword] = useState("123123");
   const { session, login, logout } = useAuth();
 
-  const handleLogin = () => {
-    login(email);
-    setEmail("");
-    setPassword("");
+  const handleLogin = async () => {
+    if (!email.trim() || !password.trim()) {
+      Alert.alert("Missing credentials", "Please enter both email and password.");
+      return;
+    }
+
+    try {
+      await login(email);
+      setEmail("");
+      setPassword("");
+    } catch (error) {
+      console.error("Login failed", error);
+      Alert.alert("Login failed", "Unable to sign in right now. Please try again.");
+    }
   };
 
-  const handleLogout = () => {
-    logout();
-    Alert.alert("Logged out", "Your session has been cleared.");
+  const handleLogout = async () => {
+    try {
+      await logout();
+      Alert.alert("Logged out", "Your session has been cleared.");
+    } catch (error) {
+      console.error("Logout failed", error);
+      Alert.alert("Logout failed", "Unable to sign out right now. Please try again.");
+    }
   };
 
   return (

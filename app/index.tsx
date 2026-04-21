@@ -2,26 +2,24 @@ import { Button } from "./components/Button";
 import { FormInput } from "./components/FormInput";
 import { Screen } from "./components/Screen";
 import { Subtitle, Title } from "./components/Typography";
+import { useAuth } from "@/contexts/AuthContext";
+import { Link } from "expo-router";
 import { useState } from "react";
-import { Alert, View } from "react-native";
-
-type User = { email: string }
-
-type Session = { user: User }
+import { Alert, Text, View } from "react-native";
 
 export default function Index() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [session, setSession] = useState<Session | null>(null);
+  const { session, login, logout } = useAuth();
 
   const handleLogin = () => {
-    setSession({ user: { email } });
+    login(email);
     setEmail("");
     setPassword("");
   };
 
   const handleLogout = () => {
-    setSession(null);
+    logout();
     Alert.alert("Logged out", "Your session has been cleared.");
   };
 
@@ -67,6 +65,10 @@ export default function Index() {
             <Button onPress={handleLogin} label="Sign In" />
           </>
         )}
+
+        <Link href="/about" className="mt-6 self-center">
+          <Text className="text-blue-600 font-semibold">Go to About</Text>
+        </Link>
       </View>
     </Screen>
   );

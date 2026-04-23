@@ -1,5 +1,8 @@
+import { HeaderShownContext } from "@react-navigation/elements";
 import { Stack } from "expo-router";
 
 export default function PublicLayout() {
-  return <Stack />;
+  return (<Stack>
+    <Stack.Screen name="index" options={{ headerShown: false }} />
+  </Stack>)
 }

@@ -1,7 +1,7 @@
-import { Button } from "./components/Button";
-import { FormInput } from "./components/FormInput";
-import { Screen } from "./components/Screen";
-import { Subtitle, Title } from "./components/Typography";
+import { Button } from "../components/Button";
+import { FormInput } from "../components/FormInput";
+import { Screen } from "../components/Screen";
+import { Subtitle, Title } from "../components/Typography";
 import { useAuth } from "@/contexts/AuthContext";
 import { Link } from "expo-router";
 import { useState } from "react";

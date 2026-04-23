@@ -1,10 +1,29 @@
 import '@/global.css';
-import { AuthProvider } from "@/contexts/AuthContext";
+import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import { Stack } from "expo-router";
+
+
 export default function RootLayout() {
   return (
     <AuthProvider>
-      <Stack />
+      <App />
     </AuthProvider>
   );
+}
+
+const App = () => {
+
+  const { session } = useAuth();
+
+  return (
+    <Stack>
+      <Stack.Protected guard={!session}>
+        <Stack.Screen name="(public)" />
+      </Stack.Protected>
+
+      <Stack.Protected guard={!!session}>
+        <Stack.Screen name="(app)" />
+      </Stack.Protected>
+    </Stack>
+  )
 }

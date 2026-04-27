@@ -19,7 +19,7 @@ export default function Index() {
     }
 
     try {
-      await login(email);
+      await login(email, password);
       setEmail("");
       setPassword("");
     } catch (error) {
@@ -45,41 +45,35 @@ export default function Index() {
         {/* Header */}
         <Title className="mb-2 text-center">{session ? "Your Account" : "Welcome Back"}</Title>
         <Subtitle className="text-center mb-8">
-          {session ? "You are currently signed in" : "Sign in to your account"}
+          "Sign in to your account"
         </Subtitle>
 
-        {session ? (
-          <>
-            <Subtitle className="text-center mb-6">Signed in as {session.user.email}</Subtitle>
-            <Button onPress={handleLogout} label="Log Out" className="bg-red-600" />
-          </>
-        ) : (
-          <>
-            {/* Email Input */}
-            <FormInput
-              label="Email"
-              placeholder="you@example.com"
-              value={email}
-              onChangeText={setEmail}
-              keyboardType="email-address"
-              autoCapitalize="sentences"
-              editable
-            />
 
-            {/* Password Input */}
-            <FormInput
-              label="Password"
-              placeholder="••••••••"
-              value={password}
-              onChangeText={setPassword}
-              secureTextEntry
-              editable
-            />
+        {/* Email Input */}
+        <FormInput
+          label="Email"
+          placeholder="you@example.com"
+          value={email}
+          onChangeText={setEmail}
+          keyboardType="email-address"
+          autoCapitalize="sentences"
+          editable
+        />
 
-            {/* Login Button */}
-            <Button onPress={handleLogin} label="Sign In" />
-          </>
-        )}
+        {/* Password Input */}
+        <FormInput
+          label="Password"
+          placeholder="••••••••"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+          editable
+        />
+
+        {/* Login Button */}
+        <Button onPress={handleLogin} label="Sign In" />
+
+
 
         <Link href="/about" className="mt-6 self-center">
           <Text className="text-blue-600 font-semibold">Go to About</Text>

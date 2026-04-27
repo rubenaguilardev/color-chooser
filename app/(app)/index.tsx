@@ -19,7 +19,7 @@ export default function Index() {
     }
 
     try {
-      await login(email);
+      await login(email, password);
       setEmail("");
       setPassword("");
     } catch (error) {
@@ -56,25 +56,7 @@ export default function Index() {
         ) : (
           <>
             {/* Email Input */}
-            <FormInput
-              label="Email"
-              placeholder="you@example.com"
-              value={email}
-              onChangeText={setEmail}
-              keyboardType="email-address"
-              autoCapitalize="sentences"
-              editable
-            />
 
-            {/* Password Input */}
-            <FormInput
-              label="Password"
-              placeholder="••••••••"
-              value={password}
-              onChangeText={setPassword}
-              secureTextEntry
-              editable
-            />
 
             {/* Login Button */}
             <Button onPress={handleLogin} label="Sign In" />

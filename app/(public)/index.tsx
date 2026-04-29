@@ -73,6 +73,9 @@ export default function Index() {
         {/* Login Button */}
         <Button onPress={handleLogin} label="Sign In" />
 
+        <Link href="/signup" className="mt-4 self-center">
+          <Text className="text-blue-600 font-semibold">Create an account</Text>
+        </Link>
 
 
         <Link href="/about" className="mt-6 self-center">

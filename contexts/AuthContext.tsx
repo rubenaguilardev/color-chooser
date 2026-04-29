@@ -2,13 +2,12 @@ import { createContext, useContext, useEffect, useState, type ReactNode } from "
 import { supabase } from "@/lib/supabase";
 import type { Session } from "@supabase/supabase-js";
 
-
-
 type AuthContextValue = {
   session: Session | null;
   login: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
   initializing: boolean;
+  signup: (email: string, password: string, name: string) => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextValue | null>(null);
@@ -24,8 +23,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   useEffect(() => {
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((event, nextSession) => {
-      console.log(event, nextSession)
+    } = supabase.auth.onAuthStateChange((_event, nextSession) => {
       setSession(nextSession);
       setInitializing(false);
     });
@@ -53,7 +51,21 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   };
 
-  return <AuthContext.Provider value={{ session, login, logout, initializing }}>{children}</AuthContext.Provider>;
+  const signup = async (email: string, password: string, name: string) => {
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: { name },
+      },
+    });
+
+    if (error) {
+      throw error;
+    }
+  };
+
+  return <AuthContext.Provider value={{ session, login, logout, initializing, signup }}>{children}</AuthContext.Provider>;
 }
 
 export function useAuth() {
